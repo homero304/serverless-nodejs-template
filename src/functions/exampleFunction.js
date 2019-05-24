@@ -1,12 +1,10 @@
 'use strict'
 
-module.exports.exampleFunction = (event, context, exampleFunctionCallback) => {
-  const response = {
+module.exports.exampleFunction = async (event, context) => {
+  return {
     statusCode: 200,
     body: JSON.stringify({
       message: 'Success!'
     })
   }
-
-  exampleFunctionCallback(null, response)
 }
