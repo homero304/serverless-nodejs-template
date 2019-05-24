@@ -9,18 +9,17 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "aws-sdk-mock": "^4.2.0",
+    "aws-sdk-mock": "^4.4.0",
     "dirty-chai": "^2.0.1",
     "generator-serverless-policy": "^2.0.0",
-    "serverless": "^1.34.0",
-    "serverless-dynamodb-autoscaling": "^0.6.2",
-    "serverless-iam-roles-per-function": "^1.0.1",
-    "serverless-mocha-plugin": "^1.8.3",
-    "serverless-pseudo-parameters": "^2.1.0",
+    "serverless": "^1.43.0",
+    "serverless-iam-roles-per-function": "^1.0.4",
+    "serverless-mocha-plugin": "^1.10.0",
+    "serverless-pseudo-parameters": "^2.4.0",
     "serverless-tag-api-gateway": "^1.0.0",
     "standard": "^11.0.1"
   },
   "dependencies": {
-    "aws-sdk": "^2.279.1"
+    "aws-sdk": "^2.462.0"
   }
 }
