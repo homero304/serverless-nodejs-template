@@ -9,6 +9,9 @@ const dirtyChai = require('dirty-chai')
 mochaPlugin.chai.use(dirtyChai)
 const expect = mochaPlugin.chai.expect
 let wrapped = mochaPlugin.getWrapper('exampleFunction', '../../../src/functions/exampleFunction.js', 'exampleFunction')
+let AWS = require('aws-sdk-mock')
+let AWS_SDK = require('aws-sdk')
+AWS.setSDKInstance(AWS_SDK)
 
 describe('exampleFunction', () => {
   before((done) => {
