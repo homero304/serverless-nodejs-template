@@ -3,9 +3,8 @@ service: serverless-template
 provider:
 # The following should stay as is unless specific customisations are required
   name: aws
-  runtime: nodejs8.10
-  region: eu-west-1
-  stage: develop
+  runtime: nodejs12.x
+  stage: dev
   stackTags:
     Name: ${self:service}
     service_name: ${self:service}
