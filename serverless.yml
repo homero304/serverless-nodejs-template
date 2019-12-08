@@ -1,4 +1,3 @@
-# Name your service using format rws-[servicename]-service
 service: serverless-template
 
 provider:
