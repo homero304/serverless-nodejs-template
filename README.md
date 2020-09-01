@@ -1,3 +1,4 @@
+cloned from https://gitlab.com/garethm/serverless-nodejs-template.git
 # Purpose
 
 This project serves as a basic template for helping get a new Serverless service
