@@ -9,7 +9,7 @@ service: aws-nodejs # NOTE: update this with your service name
 
 provider:
   name: aws
-  runtime: nodejs10.21
+  runtime: nodejs14.5
   stackTags:
     #Name: ${self:app}-${self:service}
     #service_name: ${self:service}
