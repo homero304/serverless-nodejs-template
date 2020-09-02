@@ -1,114 +1,83 @@
-service: serverless-template
+service: aws-nodejs # NOTE: update this with your service name
+# app and org for use with dashboard.serverless.com
+#app: your-app-name
+#org: your-org-name
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+# frameworkVersion: "=X.X.X"
 
 provider:
-# The following should stay as is unless specific customisations are required
   name: aws
-  runtime: nodejs12.x
-  stage: dev
+  runtime: nodejs10.21
   stackTags:
-    Name: ${self:service}
-    service_name: ${self:service}
-    environment: ${opt:stage, self:provider.stage}
-    resource_owner: #Use your Bitbucket Name here
+    #Name: ${self:app}-${self:service}
+    #service_name: ${self:service}
+    environment: ${self:custom.stage}
+    # resource_owner: #Use your Bitbucket Name here
     business_unit: RD:Development
     managed_by: sls
-# you can add statements to the Lambda function's IAM Role here
-#  iamRoleStatements:
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:ListBucket"
-#      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:PutObject"
-#      Resource:
-#        Fn::Join:
-#          - ""
-#          - - "arn:aws:s3:::"
-#            - "Ref" : "ServerlessDeploymentBucket"
-#            - "/*"
-
+              
 # you can define service wide environment variables here
 #  environment:
-#    variable1: value1
+#    myvar1: value1
 
-# you can add packaging information here
-#package:
-#  include:
-#    - include-me.js
-#    - include-me-dir/**
-#  exclude:
-#    - exclude-me.js
-#    - exclude-me-dir/**
 functions:
-  exampleFunction:
+  example:
+    handler: src/functions/example.example
+    #environment:
+    #  env-var-1: env-value-1
+    #events:
+    #  - httpApi:
+    #      path: /url
+    #      method: get
+    #iamRoleStatementsName: ${self:service}-example-IAMRole-${self:custom.stage}
+    #iamRoleStatements:
+    #  - Effect: Allow
+    #    Action:
+    #      - dynamodb:PutItem
+    #    Resource: "arn:aws:dynamodb:*:*:table/${param:table_name}"
     tags:
-      Name: ${self:service}-function-exampleFunction
+      #Name: ${self:service}-${self:custom.stage}-example
       infrastructure_tier: Lambda
-    iamRoleStatementsName: ${self:service}-exampleFunction-IAMRole-${opt:stage, self:service.stage}
-    iamRoleStatements:
-      - Effect: Allow
-        Action:
-          - resource:action
-        Resource: '*'
-    handler: src/functions/exampleFunction.exampleFunction
-#    The following are a few example events you can configure
-#    NOTE: Please make sure to change your handler code to work with those events
-#    Check the event documentation for details
-#    events:
-#      - http:
-#          path: users/create
-#          method: get
-#      - s3: ${env:BUCKET}
-#      - schedule: rate(10 minutes)
-#      - sns: greeter-topic
-#      - stream: arn:aws:dynamodb:region:XXXXXX:table/foo/stream/1970-01-01T00:00:00.000
-#      - alexaSkill: amzn1.ask.skill.xx-xx-xx-xx
-#      - alexaSmartHome: amzn1.ask.skill.xx-xx-xx-xx
-#      - iot:
-#          sql: "SELECT * FROM 'some_topic'"
-#      - cloudwatchEvent:
-#          event:
-#            source:
-#              - "aws.ec2"
-#            detail-type:
-#              - "EC2 Instance State-change Notification"
-#            detail:
-#              state:
-#                - pending
-#      - cloudwatchLog: '/aws/lambda/hello'
-#      - cognitoUserPool:
-#          pool: MyUserPool
-#          trigger: PreSignUp
 
-#    Define function environment variables here
-#    environment:
-#      variable2: value2
+
 plugins:
   - serverless-tag-api-gateway
   - serverless-iam-roles-per-function
   - serverless-pseudo-parameters
   - serverless-mocha-plugin
+  - serverless-webpack
+  #- serverless-domain-manager
+
 custom:
   serverless-mocha-plugin:
     testTemplate: templates/testTemplate.ejs
     functionTemplate: templates/functionTemplate.ejs
   apiGatewayTags:
-    Name: ${self:service}-APIGateway
-    environment: ${opt:stage, self:provider.stage}
-    resource_owner: #Use Bitbucket username
+    #Name: ${self:service}-APIGateway
+    environment: ${self:custom.stage}
+    #resource_owner: #Use Bitbucket username
     business_unit: RD:Development
     managed_by: sls
-    stackName: ${self:service}
+    #stackName: ${self:app}-${self:service}
     infrastructure_tier: APIGateway
-# you can add CloudFormation resource templates here
-#resources:
-#  Resources:
-#    NewResource:
-#      Type: AWS::S3::Bucket
-#      Properties:
-#        BucketName: my-new-bucket
-#  Outputs:
-#     NewOutput:
-#       Description: "Description for the output"
-#       Value: "Some output value"
+  webpack:
+    webpackConfig: 'webpack.config.js'   # Name of webpack configuration file
+    includeModules:
+      forceExclude:
+        - aws-sdk
+    packager: 'npm'   # Packager that will be used to package your external modules
+    excludeFiles: src/test/**/*.js # Provide a glob for files to ignore
+    #customDomain:
+    #  domainName: ${self:custom.stage}-api.${param:domain} 
+    #  basePath: ''
+    #  stage: ${self:custom.stage}
+    #  createRoute53Record: true
+    #  endpointType: 'regional'
+    #  securityPolicy: tls_1_2
+    #  apiType: http
+    #  autoDomain: true
+    #  certificateArn: ${param:cert}
+  region: ${opt:region, self:provider.region}
+  stage: ${opt:stage, self:provider.stage}

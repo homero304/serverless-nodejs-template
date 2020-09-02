@@ -1,6 +1,6 @@
 'use strict'
 
-export async function <%= handlerFunction %>(event, context, callback) {
+export async function example(event, context, callback) {
   try {
     const response = {
       statusCode: 200,

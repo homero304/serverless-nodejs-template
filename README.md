@@ -1,6 +1,8 @@
 cloned from https://gitlab.com/garethm/serverless-nodejs-template.git
 # Purpose
 
+To create a service using this repo as template run
+`serverless create --template-url https://github.com/homero304/serverless-nodejs-template.git --path myService`
 This project serves as a basic template for helping get a new Serverless service
 up and running. Just clone the repo, `rm -rf .git` then `npm install` and start 
 developing.
