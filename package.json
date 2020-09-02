@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "sls": "sls",
+    "serverless": "serverless",
     "test": "sls invoke test --path src/test --compilers @babel/register"
   },
   "author": "homero304",
