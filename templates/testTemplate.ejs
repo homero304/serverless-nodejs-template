@@ -26,4 +26,8 @@ describe('<%= functionName %>', () => {
       expect(response).to.not.be.empty();
     });
   });
+
+  after((done) => {
+    done();
+  });
 });

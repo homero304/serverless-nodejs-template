@@ -2,13 +2,16 @@
 
 export async function <%= handlerFunction %>(event, context, callback) {
   try {
-    const response = {
+    return {
       statusCode: 200,
       body: JSON.stringify({message: 'Success!'})
     };
-    callback(null, response);
   }
   catch (error) {
-    callback(error, null);
+    console.error(error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify(error)
+    };
   }
 }
